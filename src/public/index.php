@@ -14,6 +14,7 @@ use Phalcon\Mvc\Application;
 use Phalcon\Events\Event;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 use Phalcon\Events\Manager;
+use Phalcon\Acl\Adapter\Memory;
 
 
 
@@ -45,7 +46,21 @@ $eventsManager = new Manager();
 $di->set('EventsManager', $eventsManager);
 $eventsManager->attach('order', new \App\Handler\EventHandler());
 
-$application = new Application($di);
+
+$application=new Application($di);
+$eventsManager=new Manager();
+$eventsManager->attach(
+    'application:beforeHandleRequest',
+    new \App\Handler\EventHandler()
+);
+
+$di->set(
+    'EventsManager',
+    $eventsManager
+);
+
+
+$application->setEventsManager($eventsManager);
 
 try {
     // Handle the request

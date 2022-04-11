@@ -1,0 +1,5 @@
+Create a page for ACL, where we will allow components for any role. (Its your choice how you want to do it)
+Admin will have access to all (product add/edit, order add/edit, settings and all the above pages)
+manager will have access to product add/edit and order add/edit
+guest will have access to only product view
+use BeforeHandleRequest event to restrict access of component based on role provided in query parameter
